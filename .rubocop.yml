@@ -1,0 +1,33 @@
+require:
+ - rubocop-rspec
+ - rubocop-performance
+Metrics/BlockLength:
+  ExcludedMethods:
+    - within
+    - describe
+    - context
+    - feature
+    - scenario
+    - shared_examples
+RSpec/ExampleLength:
+  Enabled: false
+RSpec/MultipleExpectations:
+  Enabled: false
+RSpec/HookArgument:
+  EnforcedStyle: each
+RSpec/LetSetup:
+  Enabled: false
+Metrics/LineLength:
+  Max: 100
+Capybara/FeatureMethods:
+  Enabled: false
+Documentation:
+  Enabled: false
+Layout/SpaceInsideHashLiteralBraces:
+  EnforcedStyle: 'no_space'
+Layout/MultilineMethodCallIndentation:
+ EnforcedStyle: 'indented'
+Style/SymbolArray:
+  EnforcedStyle: 'brackets'
+Layout/EmptyLinesAroundClassBody:
+  Enabled: false
