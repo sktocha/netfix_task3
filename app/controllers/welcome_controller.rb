@@ -10,14 +10,16 @@ class WelcomeController < ApplicationController
   post '/contact_us' do
     @email_message = EmailMessage.new(message_params)
     if @email_message.valid?
-      Services::SendEmail.call(message)
-      [201]
+      # Services::SendEmail.call(message)
+      201
     else
-      [422, @email_message.errors]
+      [422, {'Content-Type' => 'application/json'}, @email_message.errors.to_json]
     end
   end
 
   def message_params
-    params.slice(*PERMITTED_MESSAGE_ATTRS)
+    attrs = (params[:message] || {}).slice(*PERMITTED_MESSAGE_ATTRS)
+    attrs[:attachment_file] &&= attrs[:attachment_file][:tempfile]
+    attrs
   end
 end

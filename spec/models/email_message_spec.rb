@@ -1,35 +1,13 @@
 # frozen_string_literal: true
 
-require './app/models/email_message.rb'
-require 'tempfile'
-
 describe EmailMessage do
   context 'when correct values' do
-    let!(:email_message) do
-      file = Tempfile.new
-      file.close!
-      described_class.new(
-        name: 'Test name',
-        email: 'test@gmail.com',
-        message: 'Test' * 15,
-        attachment_file: file
-      )
-    end
+    let!(:email_message) { build(:email_message, :valid) }
 
-    it 'name is valid' do
-      expect(email_message.name_valid?).to be true
-    end
-
-    it 'email is valid' do
-      expect(email_message.email_valid?).to be true
-    end
-
-    it 'message is valid' do
-      expect(email_message.message_valid?).to be true
-    end
-
-    it 'attachment_file is valid' do
-      expect(email_message.attachment_file_valid?).to be true
+    EmailMessage::ATTRS_CONF.each do |attr, _|
+      it "#{attr} is valid" do
+        expect(email_message.public_send(:"#{attr}_valid?")).to be true
+      end
     end
 
     it 'all attrs are valid' do
@@ -42,22 +20,12 @@ describe EmailMessage do
   end
 
   context 'when incorrect values' do
-    let!(:email_message) { described_class.new(attachment_file: 'file') }
+    let!(:email_message) { build(:email_message, :invalid) }
 
-    it 'name is invalid' do
-      expect(email_message.name_valid?).to be false
-    end
-
-    it 'email is invalid' do
-      expect(email_message.email_valid?).to be false
-    end
-
-    it 'message is invalid' do
-      expect(email_message.message_valid?).to be false
-    end
-
-    it 'attachment_file is invalid' do
-      expect(email_message.attachment_file_valid?).to be false
+    EmailMessage::ATTRS_CONF.each do |attr, _|
+      it "#{attr} is invalid" do
+        expect(email_message.public_send(:"#{attr}_valid?")).to be false
+      end
     end
 
     it 'all attrs are invalid' do
@@ -65,12 +33,7 @@ describe EmailMessage do
     end
 
     it 'errors hash is not empty' do
-      errors = {
-        name: 'must be >= 3 and <= 250',
-        email: 'wrong format',
-        message: 'must be > 50',
-        attachment_file: 'is not a file type'
-      }
+      errors = EmailMessage::ATTRS_CONF.map { |attr, conf| [attr, conf[:error]] }.to_h
       expect(email_message.errors).to eq errors
     end
   end

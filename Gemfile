@@ -12,5 +12,11 @@ group :development do
 end
 
 group :test do
+  gem 'factory_bot'
+  gem 'rack-test'
   gem 'rspec'
+end
+
+group :test, :development do
+  gem 'pry'
 end
