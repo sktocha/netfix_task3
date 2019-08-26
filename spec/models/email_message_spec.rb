@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require './lib/email_message.rb'
+require './app/models/email_message.rb'
 require 'tempfile'
 
 describe EmailMessage do
