@@ -19,7 +19,9 @@ class WelcomeController < ApplicationController
 
   def email_message_params
     attrs = (params[:email_message] || {}).slice(*PERMITTED_EMAIL_MESSAGE_ATTRS)
-    attrs[:attachment_file] &&= attrs[:attachment_file][:tempfile]
+    if attrs[:attachment_file].is_a?(Hash)
+      attrs[:attachment_file] = attrs[:attachment_file][:tempfile]
+    end
     attrs
   end
 end

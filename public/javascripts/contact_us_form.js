@@ -1,14 +1,14 @@
-var MainForm,
+var ContactUsForm,
   bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
-MainForm = (function() {
-  function MainForm() {
+ContactUsForm = (function() {
+  function ContactUsForm() {
     this.markFieldAsInvalid = bind(this.markFieldAsInvalid, this);
     this.form = $('#main_form');
     this.initHandlers();
   }
 
-  MainForm.prototype.initHandlers = function() {
+  ContactUsForm.prototype.initHandlers = function() {
     this.form.bind('submit', (function(_this) {
       return function(e) {
         var data;
@@ -43,36 +43,36 @@ MainForm = (function() {
     })(this));
   };
 
-  MainForm.prototype.resetForm = function() {
+  ContactUsForm.prototype.resetForm = function() {
     this.form.trigger('reset');
     this.markAllFieldsAsSuccess();
     return this.form.find('input, label, textarea').removeClass('is-valid text-success');
   };
 
-  MainForm.prototype.markAllFieldsAsSuccess = function() {
+  ContactUsForm.prototype.markAllFieldsAsSuccess = function() {
     this.form.find('input,textarea').removeClass('is-invalid').addClass('is-valid');
     this.form.find('label').removeClass('text-danger').addClass('text-success');
     return this.form.find('small[id$="_error"]').text('');
   };
 
-  MainForm.prototype.markFieldAsInvalid = function(field_id, error) {
+  ContactUsForm.prototype.markFieldAsInvalid = function(field_id, error) {
     this.form.find("#email_message_" + field_id).removeClass('is-valid').addClass('is-invalid');
     this.form.find("label[for=email_message_" + field_id + "]").removeClass('text-success').addClass('text-danger');
     return this.form.find("#email_message_" + field_id + "_error").text(error);
   };
 
-  MainForm.prototype.enableForm = function() {
+  ContactUsForm.prototype.enableForm = function() {
     return this.form.find('fieldset').removeAttr('disabled');
   };
 
-  MainForm.prototype.disableForm = function() {
+  ContactUsForm.prototype.disableForm = function() {
     return this.form.find('fieldset').attr('disabled', '1');
   };
 
-  return MainForm;
+  return ContactUsForm;
 
 })();
 
 $(function() {
-  return window.main_form = new MainForm();
+  return window.main_form = new ContactUsForm();
 });

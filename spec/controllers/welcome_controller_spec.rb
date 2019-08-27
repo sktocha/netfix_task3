@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
 describe WelcomeController do
-  def app
-    WelcomeController
-  end
-
   context 'with index page' do
     it 'says hello' do
       get '/'
