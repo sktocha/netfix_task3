@@ -9,7 +9,8 @@ require 'sinatra/base'
 
 Bundler.require :default, Sinatra::Base.environment
 
-Dir.glob('./app/{models,controllers,services}/*.rb').each { |file| require file }
+require './app/controllers/application_controller'
+Dir.glob('./app/{models,services,controllers}/*.rb').each { |file| require file }
 
 Pony.options = {
   from: "Netfix task3 <#{ENV['SMTP_U']}>",
