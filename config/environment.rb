@@ -9,4 +9,17 @@ require 'sinatra/base'
 
 Bundler.require :default, Sinatra::Base.environment
 
-Dir.glob('./app/{models,controllers}/*.rb').each { |file| require file }
+Dir.glob('./app/{models,controllers,services}/*.rb').each { |file| require file }
+
+Pony.options = {
+  from: "Netfix task3 <#{ENV['SMTP_U']}>",
+  via: test? ? :test : :smtp,
+  via_options: {
+    enable_starttls_auto: true,
+    authentication: :plain,
+    port: 587,
+    address: 'smtp.gmail.com',
+    user_name: "#{ENV['SMTP_U']}",
+    password: "#{ENV['SMTP_P']}"
+  }
+}

@@ -2,7 +2,9 @@
 
 source 'https://rubygems.org'
 
+gem 'pony'
 gem 'sinatra'
+gem 'slim'
 gem 'thin'
 
 group :development do

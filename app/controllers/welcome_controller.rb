@@ -10,8 +10,8 @@ class WelcomeController < ApplicationController
   post '/contact_us' do
     @email_message = EmailMessage.new(message_params)
     if @email_message.valid?
-      # Services::SendEmail.call(message)
-      201
+      ::Services::SendContactUsEmail.call(@email_message)
+      [201, {}, ['']]
     else
       [422, {'Content-Type' => 'application/json'}, @email_message.errors.to_json]
     end

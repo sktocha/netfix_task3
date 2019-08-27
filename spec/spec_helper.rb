@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-ENV['RACK_ENV'] = 'test'
+ENV['APP_ENV'] = 'test'
+ENV['RACK_ENV'] = ENV['APP_ENV']
 
 require 'rack/test'
 require 'factory_bot'
@@ -12,5 +13,9 @@ RSpec.configure do |config|
 
   config.before(:suite) do
     FactoryBot.find_definitions
+  end
+
+  config.before(:each) do
+    Mail::TestMailer.deliveries.clear
   end
 end

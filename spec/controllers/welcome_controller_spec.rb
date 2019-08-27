@@ -15,10 +15,12 @@ describe WelcomeController do
 
   context 'with contact_us action' do
     it 'send letter on correct message' do
+      expect(Mail::TestMailer.deliveries.size).to eq 0
       file = Rack::Test::UploadedFile.new('spec/fixtures/file_to_upload.txt')
       post '/contact_us', message: attributes_for(:email_message, :valid, attachment_file: file)
-      # expect(last_response.status).to eq 201
+      expect(last_response.status).to eq 201
       expect(last_response.body).to eq ''
+      expect(Mail::TestMailer.deliveries.size).to eq 1
     end
 
     it 'returns errors on incorrect message' do
