@@ -19,7 +19,7 @@ Pony.options = {
     authentication: :plain,
     port: 587,
     address: 'smtp.gmail.com',
-    user_name: "#{ENV['SMTP_U']}",
-    password: "#{ENV['SMTP_P']}"
+    user_name: ENV['SMTP_U'],
+    password: ENV['SMTP_P']
   }
 }

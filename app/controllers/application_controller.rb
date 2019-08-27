@@ -2,10 +2,11 @@
 
 class ApplicationController < Sinatra::Base
   set :views, File.expand_path('../views', __dir__)
+  set :root, File.expand_path('../../', __dir__)
 
   configure :production, :development do
     enable :logging
-    file = File.new("#{settings.root}/../../log/#{settings.environment}.log", 'a+')
+    file = File.new("#{settings.root}/log/#{settings.environment}.log", 'a+')
     file.sync = true
     use Rack::CommonLogger, file
   end
