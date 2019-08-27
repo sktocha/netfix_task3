@@ -19,7 +19,6 @@ class WelcomeController < ApplicationController
 
   def email_message_params
     attrs = (params[:email_message] || {}).slice(*PERMITTED_EMAIL_MESSAGE_ATTRS)
-    binding.pry
     attrs[:attachment_file] &&= attrs[:attachment_file][:tempfile]
     attrs
   end

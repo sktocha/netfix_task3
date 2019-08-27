@@ -1,16 +1,31 @@
 form#main_form action='/contact_us' method='POST'
-  h1 Contact us Form
-  .form-group.row
-    label for='message_name' Name
-    input#message_name.form-control name='email_message[name]' type='text'
-  .form-group.row
-    label for='message_email' Email
-    input#message_email.form-control name='email_message[email]' type='email'
-  .form-group.row
-    label for='message_message' Message
-    textarea#message_message.form-control rows='3' name='email_message[message]'
-  .form-group.row
-    label for='message_attachment_file' Attachment file
-    input#message_attachment_file.form-control-file type='file' name='email_message[attachment_file]'
-  .form-group.row
-    button.btn.btn-primary type='submit' Send
+  fieldset
+    h1 Contact us Form
+
+    .form-group.row
+      label for='email_message_name' Name
+      input#email_message_name.form-control name='email_message[name]' type='text'
+      .col-sm-3
+        small#email_message_name_error.text-danger
+
+    .form-group.row
+      label for='email_message_email' Email
+      input#email_message_email.form-control name='email_message[email]' type='email'
+      .col-sm-3
+        small#email_message_email_error.text-danger
+
+    .form-group.row
+      label for='email_message_message' Message
+      textarea#email_message_message.form-control rows='3' name='email_message[message]'
+      .col-sm-3
+        small#email_message_message_error.text-danger
+
+    .form-group.row
+      input#email_message_attachment_file.form-control-file type='file' name='email_message[attachment_file]'
+
+    .form-group.row
+      button.btn.btn-primary type='submit' Send
+  #success
+    h1 Letter sent successfully
+    .form-group.row
+      button.btn.btn-primary#send_more Send more

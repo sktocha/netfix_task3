@@ -7,3 +7,6 @@
 #main_form h1 {
   text-align: center;
 }
+#success {
+  display: none;
+}

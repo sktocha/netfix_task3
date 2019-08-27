@@ -9,6 +9,7 @@ require 'sinatra/base'
 
 Bundler.require :default, Sinatra::Base.environment
 
+require './app/controllers/application_controller'
 Dir.glob('./app/{models,services,controllers}/*.rb').each { |file| require file }
 
 Pony.options = {
