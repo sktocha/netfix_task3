@@ -8,12 +8,16 @@ class WelcomeController < ApplicationController
   end
 
   post '/contact_us' do
-    @email_message = EmailMessage.new(email_message_params)
-    if @email_message.valid?
-      ::Services::SendContactUsEmail.call(@email_message)
-      [201, {}, ['']]
+    if Sinatra::Base.test? || valid_captcha?(params['g-recaptcha-response'])
+      @email_message = EmailMessage.new(email_message_params)
+      if @email_message.valid?
+        ::Services::SendContactUsEmail.call(@email_message)
+        [201, {}, ['']]
+      else
+        [422, {'Content-Type' => 'application/json'}, @email_message.errors.to_json]
+      end
     else
-      [422, {'Content-Type' => 'application/json'}, @email_message.errors.to_json]
+      [403, {}, ['']]
     end
   end
 

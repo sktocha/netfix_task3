@@ -15,23 +15,18 @@ ContactUsForm = (function() {
         e.preventDefault();
         data = new FormData(_this.form.get(0));
         _this.disableForm();
-        return $.post({
-          url: _this.form.attr('action'),
-          data: data,
-          processData: false,
-          contentType: false
-        }).done(function(xhr, data) {
-          _this.form.find('#success').show();
-          _this.form.find('fieldset').hide();
-          return _this.resetForm();
-        }).fail(function(xhr) {
-          _this.markAllFieldsAsSuccess();
-          return $.each(xhr.responseJSON, function(k, v) {
-            return _this.markFieldAsInvalid(k, v);
+        if (window.environment === 'test') {
+          return _this.submitForm(data);
+        } else {
+          return grecaptcha.ready(function() {
+            return grecaptcha.execute(window.captcha_site_key, {
+              action: 'create_comment'
+            }).then(function(token) {
+              data.set('g-recaptcha-response', token);
+              return _this.submitForm(data);
+            });
           });
-        }).always(function(xhr) {
-          return _this.enableForm();
-        });
+        }
       };
     })(this));
     return this.form.find('#send_more').bind('click', (function(_this) {
@@ -39,6 +34,32 @@ ContactUsForm = (function() {
         e.preventDefault();
         _this.form.find('#success').hide();
         return _this.form.find('fieldset').show();
+      };
+    })(this));
+  };
+
+  ContactUsForm.prototype.submitForm = function(data) {
+    return $.post({
+      url: this.form.attr('action'),
+      data: data,
+      processData: false,
+      contentType: false
+    }).done((function(_this) {
+      return function(xhr, data) {
+        _this.form.find('#success').show();
+        _this.form.find('fieldset').hide();
+        return _this.resetForm();
+      };
+    })(this)).fail((function(_this) {
+      return function(xhr) {
+        _this.markAllFieldsAsSuccess();
+        return $.each(xhr.responseJSON, function(k, v) {
+          return _this.markFieldAsInvalid(k, v);
+        });
+      };
+    })(this)).always((function(_this) {
+      return function(xhr) {
+        return _this.enableForm();
       };
     })(this));
   };

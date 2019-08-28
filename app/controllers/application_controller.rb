@@ -14,4 +14,12 @@ class ApplicationController < Sinatra::Base
   configure :development do
     register Sinatra::Reloader
   end
+
+  def valid_captcha?(captcha)
+    uri = URI.parse('https://www.google.com/recaptcha/api/siteverify')
+    params = {secret: ENV['CAPTCHA_SECRET_KEY'], response: captcha}
+    response = Net::HTTP.post_form(uri, params)
+    JSON.parse(response.body)['success']
+  end
+
 end
