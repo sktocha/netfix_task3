@@ -3,6 +3,7 @@
 require 'net/http'
 
 class ApplicationController < Sinatra::Base
+  CAPTCHA_API_URI = URI.parse('https://www.google.com/recaptcha/api/siteverify').freeze
   set :views, File.expand_path('../views', __dir__)
   set :root, File.expand_path('../../', __dir__)
 
@@ -18,9 +19,8 @@ class ApplicationController < Sinatra::Base
   end
 
   def valid_captcha?(captcha)
-    uri = URI.parse('https://www.google.com/recaptcha/api/siteverify')
     params = {secret: ENV['CAPTCHA_SECRET_KEY'], response: captcha}
-    response = Net::HTTP.post_form(uri, params)
+    response = Net::HTTP.post_form(CAPTCHA_API_URI, params)
     JSON.parse(response.body)['success']
   end
 
