@@ -1,6 +1,10 @@
 # Description
 
 Test task.
+
+[origin](https://github.com/galetahub/hire-ruby-developer#task-3)
+
+
 Форма зворотнього зв'язку на сайті.
 
 Поля:
@@ -41,10 +45,22 @@ Test task.
 bundle
 ```
 ## Run
-SMTP_U - email for smtp
-SMTP_P - password for smtp
+### ENV variables(they are must for dev/prod env):
+#### smtp
+  checked with gmail
+
+  password from app access([https://www.lifewire.com/get-a-password-to-access-gmail-by-pop-imap-2-1171882](https://www.lifewire.com/get-a-password-to-access-gmail-by-pop-imap-2-1171882))
+
+  - SMTP_U - email for smtp(it will send and receive letter from contact form)
+  - SMTP_P - password for smtp
+
+#### captcha
+  - CAPTCHA_SITE_KEY - for google captcha v3
+  - CAPTCHA_SECRET_KEY - for google captcha v3
+
+### run command
 ```
-SMTP_U='*' SMTP_P='*' rackup
+SMTP_U='xxx' SMTP_P='xxx' CAPTCHA_SITE_KEY='xxx' CAPTCHA_SECRET_KEY='xxx' rackup
 ```
 ## Running the tests
 ```
