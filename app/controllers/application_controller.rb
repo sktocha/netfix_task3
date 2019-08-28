@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'net/http'
+
 class ApplicationController < Sinatra::Base
   set :views, File.expand_path('../views', __dir__)
   set :root, File.expand_path('../../', __dir__)
